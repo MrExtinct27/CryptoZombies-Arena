@@ -5,7 +5,7 @@
 - **Yash Mahajan** - CWID: 835167255 
 - **Arnav Tanawade** - CWID: 879953479 
 - **Bhavana Athavane** - CWID: 884423609 
-- **Pratik** - CWID: [Your CWID] 
+- **Pratik** - CWID: 810819599 
 
 ---
 
