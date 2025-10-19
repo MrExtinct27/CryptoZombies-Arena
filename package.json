@@ -1,0 +1,33 @@
+{
+  "name": "cryptozombies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node scripts/setup-metamask.js && truffle migrate --reset",
+    "compile": "truffle compile",
+    "build": "npm run compile && truffle migrate --reset",
+    "serve": "http-server . -p 8080",
+    "dev": "node scripts/dev-environment.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0",
+    "browser-sync": "^2.27.7",
+    "http-server": "^14.1.1",
+    "openzeppelin-solidity": "^4.4.1",
+    "qrcode-terminal": "^0.12.0",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.6.1"
+  },
+  "devDependencies": {
+    "ganache": "^7.9.2",
+    "truffle": "^5.11.5",
+    "chokidar": "^4.0.3"
+  }
+}

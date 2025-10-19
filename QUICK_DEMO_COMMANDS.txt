@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════
+              CRYPTOZOMBIES ARENA - QUICK DEMO COMMANDS
+═══════════════════════════════════════════════════════════════
+
+📂 NAVIGATE TO PROJECT
+──────────────────────────────────────────────────────────────
+cd /Users/yashmahajan/Downloads/Cryptozombie_Midterm_Project/Cryptozombie_Midterm_Project
+
+
+🚀 START THE PROJECT
+──────────────────────────────────────────────────────────────
+npm run dev
+
+→ Opens: http://localhost:8080
+→ Ganache: http://127.0.0.1:8545
+→ Chain ID: 1337
+
+
+🔑 GANACHE ACCOUNTS (Displayed after npm run dev)
+──────────────────────────────────────────────────────────────
+
+Account #0 (Main):
+  Address: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+  Private Key: ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+  Balance: 100 ETH
+
+Account #1 (For Marketplace Testing):
+  Address: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+  Private Key: 59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
+  Balance: 100 ETH
+
+Account #5 (Extra):
+  Address: 0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc
+  Private Key: 8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba
+  Balance: 100 ETH
+
+→ These accounts will be automatically displayed in terminal
+
+
+🦊 METAMASK SETUP
+──────────────────────────────────────────────────────────────
+
+Add Network:
+  Network Name: Ganache Local
+  RPC URL: http://127.0.0.1:8545
+  Chain ID: 1337
+  Currency Symbol: ETH
+
+Import Account:
+  1. Click Account Icon → "Import Account"
+  2. Select "Private Key"
+  3. Paste private key (WITHOUT "0x" prefix)
+  4. Click "Import"
+
+
+🎮 DEMO FLOW (5-10 minutes)
+──────────────────────────────────────────────────────────────
+
+1. Connect Wallet
+   → Click "Connect Wallet"
+   → Confirm in MetaMask
+
+2. Create Zombie
+   → Enter name
+   → Confirm transaction
+   → Show in "View Army"
+
+3. Breed (if you have 2+ zombies)
+   → Select 2 zombies
+   → Name the offspring
+   → Confirm transaction
+
+4. Battle
+   → Select your zombie
+   → Choose opponent
+   → Attack & see result
+
+5. Marketplace
+   → List zombie for sale
+   → Browse market
+   → Switch account & buy (optional)
+
+6. Leaderboard
+   → View all players
+   → Click on entry for details
+   → Show "YOU" badge
+
+
+🐛 TROUBLESHOOTING
+──────────────────────────────────────────────────────────────
+
+Port Already in Use:
+  lsof -ti:8545 | xargs kill -9
+  npm run dev
+
+Clean Restart:
+  killall node
+  rm -rf build/
+  npm run dev
+
+MetaMask Reset:
+  Settings → Advanced → Clear Activity Tab Data
+
+Hard Refresh Browser:
+  Mac: Cmd + Shift + R
+  Windows: Ctrl + Shift + R
+
+
+🛑 STOP THE SERVER
+──────────────────────────────────────────────────────────────
+Press: Ctrl + C
+
+
+📊 TALKING POINTS
+──────────────────────────────────────────────────────────────
+✓ Real Ethereum blockchain (local Ganache)
+✓ Smart contracts in Solidity
+✓ ERC721 NFT standard
+✓ MetaMask wallet integration
+✓ Gas fees for transactions
+✓ Permanent on-chain storage
+✓ Real-time data from blockchain
+✓ 50+ contract functions
+✓ 7+ Solidity contracts
+
+
+🎯 KEY FEATURES TO SHOW
+──────────────────────────────────────────────────────────────
+✓ Zombie creation with custom names
+✓ DNA-based breeding system
+✓ Turn-based battle with animations
+✓ NFT marketplace (list/buy/sell)
+✓ Real-time leaderboard from blockchain
+✓ Player rankings with "YOU" badge
+✓ Wallet management (connect/disconnect/switch)
+✓ Top 3 players with medals (🥇🥈🥉)
+
+
+═══════════════════════════════════════════════════════════════
+                    GOOD LUCK! 🚀
+═══════════════════════════════════════════════════════════════
+

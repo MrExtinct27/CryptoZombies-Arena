@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧟‍♂️ CryptoZombies Arena - The Ultimate Blockchain Battle Game</title>
+<link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Creepster&display=swap" rel="stylesheet">
+  
+  <!-- External Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="background-effects">
+    <div class="stars"></div>
+    <div class="nebula"></div>
+    <div class="particles"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-brand">
+      <h1 class="logo">🧟‍♂️ CRYPTOZOMBIES</h1>
+      <span class="tagline">ARENA</span>
+    </div>
+    <div class="nav-menu">
+      <button class="nav-btn active" data-section="army">🏠 Army</button>
+      <button class="nav-btn" data-section="battle">⚔️ Battle</button>
+      <button class="nav-btn" data-section="breeding">🧬 Breeding</button>
+      <button class="nav-btn" data-section="marketplace">💰 Market</button>
+      <button class="nav-btn" data-section="leaderboard">🏆 Leaderboard</button>
+    </div>
+            <div class="user-info">
+              <div class="wallet-container">
+                <button class="wallet-status" id="walletStatus" type="button">🔌 Connect Wallet</button>
+                <div class="wallet-dropdown" id="walletDropdown" style="display: none;">
+                  <div class="wallet-dropdown-header">
+                    <span class="wallet-dropdown-title">Wallet</span>
+                    <button class="wallet-dropdown-close" id="closeWalletDropdown">×</button>
+                  </div>
+                  <div class="wallet-dropdown-account">
+                    <div class="account-label">Connected Account</div>
+                    <div class="account-address" id="fullWalletAddress"></div>
+                    <button class="btn-copy-address" id="copyAddressBtn">📋 Copy</button>
+                  </div>
+                  <div class="wallet-dropdown-balance">
+                    <span class="balance-label">Balance:</span>
+                    <span class="balance-value" id="dropdownBalance">0 ETH</span>
+                  </div>
+                  <div class="wallet-dropdown-actions">
+                    <button class="wallet-action-btn" id="switchAccountBtn">
+                      <span>🔄 Switch Account</span>
+                    </button>
+                    <button class="wallet-action-btn disconnect-btn" id="disconnectWalletBtn">
+                      <span>🚪 Disconnect</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="user-balance" id="userBalance">0 ETH</div>
+            </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <div class="main-container">
+    <!-- Army Section -->
+    <section id="army-section" class="content-section active">
+      <div class="section-header">
+        <h2>🧟‍♂️ Your Zombie Army</h2>
+        <div class="section-controls">
+          <button class="btn-primary createzombieButton">
+            <span class="btn-icon">🧬</span>
+            <span class="btn-text">Create Zombie</span>
+            <span class="btn-cost">0.001 ETH</span>
+          </button>
+          <button class="btn-secondary showZombieButton">
+            <span class="btn-icon">👁️</span>
+            <span class="btn-text">Refresh Army</span>
+          </button>
+        </div>
+      </div>
+      
+      <div id="txStatus" class="status-message"></div>
+      <div id="zombies" class="zombie-grid"></div>
+    </section>
+
+            <!-- Battle Arena Section -->
+            <section id="battle-section" class="content-section">
+              <div class="section-header">
+                <h2>⚔️ Battle History</h2>
+                <div class="battle-info">
+                  <p>💡 <strong>Tip:</strong> Use the ⚔️ Battle button on zombie cards in the Army section to start battles!</p>
+                </div>
+              </div>
+              
+              <div class="battle-history">
+                <div class="history-stats">
+                  <div class="stat-card">
+                    <h3>Total Battles</h3>
+                    <div class="stat-value" id="totalBattles">0</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Victories</h3>
+                    <div class="stat-value success" id="totalVictories">0</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Defeats</h3>
+                    <div class="stat-value error" id="totalDefeats">0</div>
+                  </div>
+                  <div class="stat-card">
+                    <h3>Win Rate</h3>
+                    <div class="stat-value" id="winRate">0%</div>
+                  </div>
+                </div>
+                
+                <div class="history-list">
+                  <h3>Recent Battles</h3>
+                  <div id="battleHistoryList">
+                    <div class="empty-state">
+                      <div class="empty-icon">⚔️</div>
+                      <p>No battles yet!</p>
+                      <p class="empty-hint">Go to your Army and click the ⚔️ Battle button to start your first battle.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+    <!-- Breeding Section -->
+    <section id="breeding-section" class="content-section">
+      <div class="section-header">
+        <h2>🧬 Zombie Breeding Lab</h2>
+        <div class="breeding-info">
+          <p>💡 <strong>How It Works:</strong> Select two zombies to breed and create offspring with mixed DNA from both parents!</p>
+          <p>📋 <strong>Requirements:</strong> Both zombies must be level 2 or higher</p>
+          <p>💰 <strong>Cost:</strong> 0.002 ETH + gas</p>
+          <p>🎲 <strong>Genetics:</strong> Offspring DNA is calculated from parent DNA with 5% mutation chance!</p>
+        </div>
+      </div>
+      
+      <div class="breeding-interface">
+        <div class="parent-selection">
+          <div class="parent-slot">
+            <h3>👨 Parent 1</h3>
+            <select class="zombie-select" id="parent1Select">
+              <option value="">Select a zombie...</option>
+            </select>
+            <div class="zombie-preview" id="parent1Preview"></div>
+          </div>
+          
+          <div class="breeding-symbol">
+            <div class="breed-icon">🧬</div>
+            <div class="breed-plus">+</div>
+          </div>
+          
+          <div class="parent-slot">
+            <h3>👩 Parent 2</h3>
+            <select class="zombie-select" id="parent2Select">
+              <option value="">Select a zombie...</option>
+            </select>
+            <div class="zombie-preview" id="parent2Preview"></div>
+          </div>
+        </div>
+        
+        <div class="breeding-actions">
+          <button class="btn-primary breed-btn" id="breedBtn" disabled>
+            🧬 Breed Zombies
+          </button>
+          <p class="breeding-hint" id="breedingHint">Select two different zombies to start breeding</p>
+        </div>
+        
+        <div class="breeding-results" id="breedingResults" style="display: none;">
+          <h3>🎉 Breeding Successful!</h3>
+          <div class="offspring-preview" id="offspringPreview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marketplace Section -->
+    <section id="marketplace-section" class="content-section">
+      <div class="section-header">
+        <h2>💰 Zombie Marketplace</h2>
+        <div class="marketplace-toggle">
+          <button class="toggle-btn active" id="marketToggleBtn">
+            <span>🏪 Browse Market</span>
+          </button>
+          <button class="toggle-btn" id="sellToggleBtn">
+            <span>💼 Sell My Zombies</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Market View (Browse & Buy) -->
+      <div id="marketView" class="marketplace-view" style="display: block;">
+        <div class="market-controls">
+          <input type="text" id="marketSearchInput" class="search-input" placeholder="🔍 Search zombies...">
+          <select id="marketSortSelect" class="sort-select">
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="level-high">Level: High to Low</option>
+            <option value="recent">Recently Listed</option>
+          </select>
+        </div>
+        
+        <div class="marketplace-listings" id="marketplaceListings">
+          <div class="loading-state">Loading marketplace...</div>
+        </div>
+      </div>
+      
+      <!-- Sell View (List Zombies) -->
+      <div id="sellView" class="marketplace-view" style="display: none;">
+        <div class="sell-instructions">
+          <h3>📋 List Your Zombie for Sale</h3>
+          <p>Select a zombie from your collection below, then set your price and description.</p>
+        </div>
+        
+        <div id="zombiesForSaleList" class="zombies-for-sale-container">
+          <div class="loading-state">Loading your zombies...</div>
+        </div>
+        
+        <!-- Listing Form (appears when zombie is selected) -->
+        <div id="listingFormContainer" class="listing-form-container" style="display: none;">
+          <div class="form-header">
+            <h3>📝 Listing Details for <span id="selectedZombieName"></span></h3>
+            <button class="btn-icon-close" id="cancelSelectionBtn">×</button>
+          </div>
+          
+          <div class="form-content">
+            <div class="zombie-preview" id="selectedZombieInfo"></div>
+            
+            <div class="form-group">
+              <label for="zombiePriceInput">
+                <span class="label-icon">💰</span>
+                Price (ETH)
+              </label>
+              <input 
+                type="number" 
+                id="zombiePriceInput" 
+                class="form-input" 
+                placeholder="e.g., 0.05" 
+                step="0.001" 
+                min="0.001"
+              />
+              <small class="form-hint">Minimum price: 0.001 ETH</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="zombieDescriptionInput">
+                <span class="label-icon">📄</span>
+                Description
+              </label>
+              <textarea 
+                id="zombieDescriptionInput" 
+                class="form-textarea" 
+                placeholder="Describe your zombie's special qualities..."
+                rows="3"
+                maxlength="200"
+              ></textarea>
+              <small class="form-hint">Maximum 200 characters</small>
+            </div>
+            
+            <div class="form-actions">
+              <button class="btn-secondary" id="cancelSelectionBtn2">Cancel</button>
+              <button class="btn-primary" id="submitListingBtn">
+                <span>🏷️ Create Listing</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard-section" class="content-section">
+      <div class="section-header">
+        <h2>🏆 Leaderboards</h2>
+      </div>
+      
+      <div class="leaderboard-tabs">
+        <button class="tab-btn active" data-tab="players">Top Players</button>
+        <button class="tab-btn" data-tab="zombies">Strongest Zombies</button>
+        <button class="tab-btn" data-tab="guilds">Guild Rankings</button>
+      </div>
+      
+      <div class="leaderboard-content" id="leaderboardContent"></div>
+    </section>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="createZombieModal">
+      <div class="modal-header">
+        <h3>Create New Zombie</h3>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="creation-animation">
+          <div class="dna-helix"></div>
+          <div class="energy-rings"></div>
+        </div>
+        <input type="text" id="zombieName" placeholder="Enter zombie name (max 25 chars)" maxlength="25">
+        <div class="name-validation" id="nameValidation"></div>
+        <div class="modal-actions">
+          <button class="btn-primary" id="confirmCreate">Create Zombie (0.001 ETH)</button>
+          <button class="btn-secondary" id="cancelCreate">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Battle Modal -->
+  <div class="modal-overlay" id="battleModal">
+    <div class="modal battle-modal">
+      <div class="battle-interface">
+        <div class="battle-arena-visual">
+          <div class="fighter fighter1" id="fighter1">
+            <div class="zombie-avatar"></div>
+            <div class="fighter-stats"></div>
+          </div>
+          <div class="vs-indicator">VS</div>
+          <div class="fighter fighter2" id="fighter2">
+            <div class="zombie-avatar"></div>
+            <div class="fighter-stats"></div>
+          </div>
+        </div>
+        <div class="battle-log" id="battleLog"></div>
+        <div class="battle-controls">
+          <button class="btn-primary" id="attackBtn">Attack!</button>
+          <button class="btn-secondary" id="fleeBtn">Flee</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlays -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Wallet Connection - Handled by app.js -->
+  <script>
+    // Old handleWalletConnection removed - now handled by app.js connectWallet()
+    
+    // Test function only (for debugging)
+    window.testWallet = async function() {
+      console.log("🧪 Testing wallet...");
+      try {
+        if (!window.ethereum) {
+          alert("MetaMask not detected!");
+          return;
+        }
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        alert("Success! Connected to: " + accounts[0].substring(0, 10) + "...");
+        console.log("✅ Test successful:", accounts);
+      } catch (error) {
+        alert("Test failed: " + error.message);
+        console.error("❌ Test failed:", error);
+      }
+    };
+    
+    console.log("✅ Wallet test function loaded");
+  </script>
+
+  <!-- Application Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/contracts.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/battle.js"></script>
+  <script src="js/breeding.js"></script>
+  <script src="js/marketplace-new.js"></script>
+  <script src="js/leaderboard.js"></script>
+  <script src="js/app.js"></script>
+  
+  <!-- Debug Script -->
+  <script>
+    // Test button functionality
+    $(document).ready(function() {
+      console.log("🧪 Testing button setup...");
+      setTimeout(() => {
+        const btn = $('#submitListingBtn');
+        console.log("Submit listing button found:", btn.length > 0);
+        if (btn.length > 0) {
+          console.log("✅ Button exists in DOM");
+        } else {
+          console.log("❌ Button NOT found in DOM");
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
