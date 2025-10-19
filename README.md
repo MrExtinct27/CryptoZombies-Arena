@@ -2,10 +2,10 @@
 
 ## 👥 Team Members
 
-- **Yash Mahajan** - CWID: [Your CWID] - Email: [Your Email]
-- **Arnav Tanawade** - CWID: [Your CWID] - Email: [Your Email]
-- **Bhavana** - CWID: [Your CWID] - Email: [Your Email]
-- **Pratik** - CWID: [Your CWID] - Email: [Your Email]
+- **Yash Mahajan** - CWID: 835167255 
+- **Arnav Tanawade** - CWID: [Your CWID] 
+- **Bhavana** - CWID: [Your CWID] 
+- **Pratik** - CWID: [Your CWID] 
 
 ---
 
